@@ -345,6 +345,25 @@ export const deleteCustomerHTTP = createAsyncThunk('fetchData/deleteCustomer', a
   return solar
 })
 
+export const reseedDatabase = createAsyncThunk('fetchData/reseedDatabase', async (empty: string = '', { getState }: any) => {
+  const state: solarityState = getState().solarity
+  const url = `${primary_url}/api/v1/users/reseedDatabase`
+  let solar
+  try {
+    const httpResponse = await axios.get(url)
+    solar = {
+      success: true,
+      data: httpResponse.data.data.customers,
+    }
+  } catch (error: any | AxiosError) {
+    solar = {
+      success: false,
+      data: error.response.data,
+    }
+  }
+  return solar
+})
+
 const solaritySlice = createSlice({
   name: 'counter',
   initialState,
@@ -448,6 +467,13 @@ const solaritySlice = createSlice({
       .addCase(deleteCustomerHTTP.fulfilled, (state, action) => {
         if (action.payload.success === true) {
           state.editCustomer = { ...emptyCustomer }
+        } else {
+          state.errorModal = parseError(action)
+        }
+      })
+      .addCase(reseedDatabase.fulfilled, (state, action) => {
+        if (action.payload.success === true) {
+          
         } else {
           state.errorModal = parseError(action)
         }

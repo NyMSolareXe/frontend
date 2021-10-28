@@ -6,12 +6,25 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
-import { Link, BrowserRouter as Router } from 'react-router-dom'
+import { Link, BrowserRouter as Router, useHistory } from 'react-router-dom'
+import { useAppDispatch } from '../app/hooks'
+import { getAllCustomersWithOrganization, getAllOrganizations, reseedDatabase } from '../features/solarity/solarity-slice'
 
 export default function ButtonAppBar() {
   const navLinkStyle: React.CSSProperties = {
     textDecoration: 'none',
     color: '#fff',
+  }
+  const dispatch = useAppDispatch()
+  const history = useHistory()
+
+  const confirm = async () => {
+    const response: any = await dispatch(reseedDatabase())
+    if (response.payload.success) {
+      await dispatch(getAllOrganizations())
+      await dispatch(getAllCustomersWithOrganization())
+      history.push('/login')
+    }
   }
 
   return (
@@ -36,6 +49,9 @@ export default function ButtonAppBar() {
           <Link to="/customers" style={navLinkStyle}>
             <Button color="inherit">Customers</Button>
           </Link>
+          <Button variant="contained" color="error" onClick={confirm}>
+            ReSeed
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
