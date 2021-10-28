@@ -19,10 +19,12 @@ const EditCustomer = () => {
   const createCustomerOrganizationRedux = useAppSelector((state) => state.solarity.createCustomerOrganization)
 
   useEffect(() => {
-    if (customersForAllOrganizationRedux.length !== 0) {
-      const { customer_id, customer_id: id, customer_Name: name, customer_Location: location, organization_id } = customersForAllOrganizationRedux[urlID]
-      dispatch(updateEditCustomerFields({ id, name, location }))
-      dispatch(updateCreateCustomerOrganizationFields({ customer_id, organization_id }))
+    if (customersForAllOrganizationRedux && customersForAllOrganizationRedux.length !== 0) {
+      if(customersForAllOrganizationRedux[urlID]) {
+        const { customer_id, customer_id: id, customer_Name: name, customer_Location: location, organization_id } = customersForAllOrganizationRedux[urlID]
+        dispatch(updateEditCustomerFields({ id, name, location }))
+        dispatch(updateCreateCustomerOrganizationFields({ customer_id, organization_id }))
+      }
     }
   }, [customersForAllOrganizationRedux])
 
