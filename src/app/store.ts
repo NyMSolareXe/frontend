@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
+import solarityReducer from '../features/solarity/solarity-slice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    solarity: solarityReducer,
   },
 });
 

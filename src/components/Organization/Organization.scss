@@ -1,0 +1,30 @@
+.Organization {
+  &_Parent {
+    display: grid;
+    // justify-content: center;
+    // flex-wrap: wrap;
+    grid-template-columns: repeat(2, 35%);
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    grid-gap: 2rem;
+  }
+  &_Boxes {
+    display: flex;
+    justify-content: center;
+    border: 1px solid #1976D2;
+    cursor: pointer;
+    color: #3e3c3f;
+    &:hover {
+      background-color: #1976D2;
+      color: #fff;
+      transition: 0.3s ease-in;
+    }
+
+    &:active {
+      background-color: red;
+      color: #fff;
+      transition: 0.1s ease-in;
+    }
+  }
+}
